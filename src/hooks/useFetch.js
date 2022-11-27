@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (requestServiceAPI, requestEndpoint) => {
+const useFetch = (requestServiceAPI, requestEndpoint, requestId) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   const [success, setSuccess] = useState();
 
-  const getData = async (serviceAPI, endpoint, config) => {
+  const getData = async (serviceAPI, endpoint, config, id = "") => {
     try {
-      const response = await serviceAPI.get(`/${endpoint}`, config);
+      const response = await serviceAPI.get(`/${endpoint}/${id}`, config);
       // console.log(response);
       if (response) {
         const data = await response;
@@ -32,8 +32,8 @@ const useFetch = (requestServiceAPI, requestEndpoint) => {
       },
     };
     if (requestEndpoint)
-      getData(requestServiceAPI, requestEndpoint, requestConfig);
-  }, [requestEndpoint, requestServiceAPI]);
+      getData(requestServiceAPI, requestEndpoint, requestConfig, requestId);
+  }, [requestEndpoint, requestId, requestServiceAPI]);
   return { data, isLoading, error, success };
 };
 export default useFetch;
