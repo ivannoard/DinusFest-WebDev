@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdLocationPin } from "react-icons/md";
 import { SiChatbot } from "react-icons/si";
-import { Tooltip } from "react-tooltip";
-
 function SearchLocation() {
   return (
     <>
-      <div className="form-group flex items-center relative">
+      <div className="form-group flex items-center relative w-full">
         <input
           type="text"
           placeholder="Cari lokasi . . . "
-          className="border py-2 px-3 rounded-[10px] w-[350px] outline-none focus:border-orange-500"
+          className="border py-2 px-3 rounded-[10px] w-full outline-none focus:border-orange-500"
         />
         <button className="absolute z-10 right-3 border-l border-slate-500 pl-2">
           <BiSearchAlt fill="#888888" />
@@ -20,19 +18,7 @@ function SearchLocation() {
     </>
   );
 }
-function ChatToBot() {
-  return (
-    <>
-      <div className="form-group flex items-center relative">
-        <input
-          type="text"
-          placeholder="Kamu mau cari apa?"
-          className="border py-2 px-3 rounded-[10px] w-[350px] outline-none focus:border-orange-500"
-        />
-      </div>
-    </>
-  );
-}
+
 const Navbar = ({ state, setState }) => {
   function handleChat(e) {
     e.preventDefault();
@@ -40,8 +26,8 @@ const Navbar = ({ state, setState }) => {
   }
   return (
     <>
-      <nav className="pt-10">
-        <div className="max-w-lg mx-auto flex justify-center">
+      <nav className="max-w-sm md:max-w-lg px-5 bg-green-500 fixed left-0 right-0 mx-auto top-5 z-10">
+        <div className={`flex ${state ? "md:flex" : "md:block"}`}>
           <div className="bg-white py-2 px-4 rounded-[10px]">
             <form className="flex gap-2">
               {state ? "" : <SearchLocation />}
