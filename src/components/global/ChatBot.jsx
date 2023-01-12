@@ -4,7 +4,7 @@ import { MdSend } from "react-icons/md";
 function Bot(props) {
   return (
     <>
-      <div className="chat-bot bg-red-500 text-white w-3/4 p-3 rounded-tr-[10px] rounded-tl-[10px] rounded-br-[10px]">
+      <div className="chat-bot bg-white text-slate-900 w-3/4 p-3 rounded-tr-[10px] rounded-tl-[10px] rounded-br-[10px]">
         <div dangerouslySetInnerHTML={{ __html: props.message }}></div>
       </div>
     </>
@@ -13,7 +13,7 @@ function Bot(props) {
 function User(props) {
   return (
     <>
-      <div className="chat-user bg-red-500 text-white w-3/4 p-3 rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] ml-auto">
+      <div className="chat-user bg-white text-slate-900 w-3/4 p-3 rounded-tr-[10px] rounded-tl-[10px] rounded-bl-[10px] ml-auto">
         <p>{props.message}</p>
       </div>
     </>
