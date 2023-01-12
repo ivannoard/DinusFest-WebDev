@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Navbar, ChatBot, Menu } from "../../components/global";
+import { ChatBot, Menu, Navbar } from "../../components/global";
 // query
 import { useQuery } from "@apollo/client";
-import { GET_ALL_USER } from '../../graphql/user'
+import { GET_ALL_USER } from "../../graphql/user";
 const Home = () => {
   const [stateChat, setStateChat] = useState(false);
   const [stateProfile, setStateProfile] = useState(false);
   // uji coba query // success
-  const { data, loading, error } = useQuery(GET_ALL_USER);
-  console.log(data)
+  const { data } = useQuery(GET_ALL_USER);
+  console.log(data);
 
   return (
     <>

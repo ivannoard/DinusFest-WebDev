@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { WithFrame, WithoutFrame } from "../components/template";
+import { WithoutFrame } from "../components/template";
 import { Home } from "../pages";
 import { Login, Register } from "../pages/Auth";
 
