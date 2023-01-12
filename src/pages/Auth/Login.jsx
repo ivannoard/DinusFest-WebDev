@@ -13,6 +13,7 @@ const Login = () => {
   }
   function handleLogin(e) {
     e.preventDefault();
+    localStorage.setItem("user", JSON.stringify(fields));
     navigate("/");
   }
   return (

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdLocationPin } from "react-icons/md";
 import { SiChatbot } from "react-icons/si";
+import { useNavigate } from "react-router-dom";
 function SearchLocation() {
   return (
     <>
@@ -19,15 +20,43 @@ function SearchLocation() {
   );
 }
 
-const Navbar = ({ state, setState }) => {
+const Navbar = ({ state, setState, setStateProfile }) => {
+  const [toggle, setToggle] = useState(false);
+  const getUser = localStorage.getItem("user");
+  const navigate = useNavigate();
   function handleChat(e) {
     e.preventDefault();
     setState(!state);
   }
   return (
     <>
-      <nav className="max-w-sm md:max-w-lg px-5 bg-green-500 fixed left-0 right-0 mx-auto top-5 z-10">
-        <div className={`flex ${state ? "md:flex" : "md:block"}`}>
+      <div
+        className={`fixed top-0 w-full transition ${
+          !toggle ? "" : "bg-white shadow-md"
+        }  py-2 px-5 flex justify-end`}
+        onMouseEnter={() => setToggle(true)}
+        onMouseLeave={() => setToggle(false)}
+      >
+        {getUser ? (
+          <p
+            className="underline cursor-pointer"
+            onClick={() => setStateProfile(true)}
+          >
+            Menu
+          </p>
+        ) : (
+          <p
+            className="underline cursor-pointer"
+            onClick={() => navigate("login")}
+          >
+            Masuk
+          </p>
+        )}
+      </div>
+      <nav className="max-w-sm md:max-w-lg px-5 fixed left-0 right-0 mx-auto top-12 z-10">
+        <div
+          className={`flex ${state ? "md:flex justify-center" : "md:block"}`}
+        >
           <div className="bg-white py-2 px-4 rounded-[10px]">
             <form className="flex gap-2">
               {state ? "" : <SearchLocation />}

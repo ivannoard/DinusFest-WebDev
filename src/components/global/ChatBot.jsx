@@ -22,7 +22,7 @@ function User(props) {
 const ChatBot = ({ setState }) => {
   return (
     <>
-      <div className="py-3 px-2 fixed right-0 w-[400px] h-full z-[11]">
+      <div className="py-3 px-2 fixed right-0 w-[400px] h-full z-[12]">
         <div className="header-chat p-3 bg-blue-500 rounded-tr-[10px] rounded-tl-[10px] flex justify-between items-center">
           <FiChevronLeft
             size={25}
@@ -32,7 +32,7 @@ const ChatBot = ({ setState }) => {
           <h3>Memobot</h3>
           <div></div>
         </div>
-        <div className="h-[80%] bg-white bg-opacity-40 overflow-scroll p-2 flex flex-col gap-3">
+        <div className="h-[80%] bg-white bg-opacity-60 overflow-scroll p-2 flex flex-col gap-3">
           {/* chat content */}
           {/* bot chat */}
           <Bot message="<p>Haloo ada yang bisa saya bantu dengan fitur chat bot kami?</p>" />
