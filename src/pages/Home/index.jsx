@@ -1,27 +1,30 @@
-import React, { useContext } from "react";
-import { postData } from "../../utils/httpRequest";
-import { serviceHookbin } from "../../services";
-import { AuthContext } from "../../context/authContext";
+import React, { useState } from "react";
+import { Navbar, ChatBot, Menu } from "../../components/global";
 // query
 import { useQuery } from "@apollo/client";
 import { GET_ALL_USER } from '../../graphql/user'
 const Home = () => {
+  const [stateChat, setStateChat] = useState(false);
+  const [stateProfile, setStateProfile] = useState(false);
   // uji coba query // success
   const { data, loading, error } = useQuery(GET_ALL_USER);
-
-  const { user } = useContext(AuthContext);
-  console.log(user);
-  const credentials = {
-    name: "ivan2",
-  };
-  const handleSubmit = async () => {
-    await postData(serviceHookbin, "postData", credentials);
-  };
   console.log(data)
+
   return (
-    <div className="App">
-      <button onClick={handleSubmit}>Kirim MockAPI</button>
-    </div>
+    <>
+      <main className=" min-h-screen w-full">
+        <Navbar
+          state={stateChat}
+          setState={setStateChat}
+          setStateProfile={setStateProfile}
+        />
+        {stateChat && <ChatBot setState={setStateChat} />}
+        {stateProfile && <Menu setStateProfile={setStateProfile} />}
+        <div className="bg-red-400 w-full min-h-screen">
+          <h1>Ini Map</h1>
+        </div>
+      </main>
+    </>
   );
 };
 
