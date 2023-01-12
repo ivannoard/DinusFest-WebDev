@@ -9,7 +9,7 @@ const MemoMenu = ({ setMenuState, setToggleMenu }) => {
   }
   return (
     <>
-      <div className="absolute w-3/4 h-full rounded-bl-[10px] border-r bg-white z-10">
+      <div className="fixed w-[300px] min-h-screen  border-r bg-white z-10">
         <div className="menus flex flex-col gap-3 p-3">
           {memoMenus.map((item) => (
             <div key={item.id} className="menu rounded-[10px] bg-blue-500 p-2">
@@ -18,7 +18,7 @@ const MemoMenu = ({ setMenuState, setToggleMenu }) => {
           ))}
         </div>
       </div>
-      <div className="absolute w-full h-full rounded-br-[10px] rounded-bl-[10px] bg-black bg-opacity-70 z-[9]"></div>
+      <div className="fixed w-[400px] min-h-screen rounded-br-[10px] bg-black bg-opacity-70 z-[9]"></div>
     </>
   );
 };

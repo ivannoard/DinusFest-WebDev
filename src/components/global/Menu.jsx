@@ -27,7 +27,7 @@ const Menu = ({ setStateProfile }) => {
   }, [menuState]);
   return (
     <>
-      <div className="w-[400px] fixed top-12 right-3 bg-white rounded-[10px] z-[11]">
+      <div className="w-[400px] h-full fixed top-0 right-0 bg-white  z-[11]">
         <div className="profile-header p-3 flex justify-between items-center pb-2 shadow-md">
           <div className="flex items-center gap-3">
             <HiOutlineMenuAlt2
@@ -43,15 +43,17 @@ const Menu = ({ setStateProfile }) => {
           />
         </div>
         <div
-          className={`h-[480px] ${
+          className={`h-[92%] ${
             toggleMenu ? "overflow-hidden" : "overflow-scroll"
           } relative`}
         >
           {toggleMenu && (
-            <MemoMenu
-              setMenuState={setMenuState}
-              setToggleMenu={setToggleMenu}
-            />
+            <div className="overflow-hidden">
+              <MemoMenu
+                setMenuState={setMenuState}
+                setToggleMenu={setToggleMenu}
+              />
+            </div>
           )}
           {currentView}
         </div>
