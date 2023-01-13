@@ -22,7 +22,7 @@ function User(props) {
 const ChatBot = ({ setState }) => {
   return (
     <>
-      <div className="py-3 px-2 fixed right-0 w-[400px] h-full z-[12]">
+      <div className="py-3 px-2 fixed right-0 w-[400px] h-full z-[401]">
         <div className="header-chat p-3 bg-blue-500 rounded-tr-[10px] rounded-tl-[10px] flex justify-between items-center">
           <FiChevronLeft
             size={25}
