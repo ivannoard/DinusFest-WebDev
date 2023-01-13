@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdLocationPin } from "react-icons/md";
 import { SiChatbot } from "react-icons/si";
-import { useMap } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 function SearchLocation() {
   return (
@@ -22,8 +21,6 @@ function SearchLocation() {
 }
 
 const Navbar = ({ state, setState, setStateProfile }) => {
-  const map = useMap();
-  console.log(map);
   const getUser = localStorage.getItem("user");
   const navigate = useNavigate();
   function handleChat(e) {
