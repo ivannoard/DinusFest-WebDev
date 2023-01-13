@@ -22,8 +22,8 @@ function User(props) {
 const ChatBot = ({ setState }) => {
   return (
     <>
-      <div className="py-3 px-2 fixed right-0 w-[400px] h-full z-[401]">
-        <div className="header-chat p-3 bg-blue-500 rounded-tr-[10px] rounded-tl-[10px] flex justify-between items-center">
+      <div className="fixed right-0 w-[400px] h-screen z-[402]">
+        <div className="header-chat p-2 bg-white flex justify-between items-center shadow-md">
           <FiChevronLeft
             size={25}
             className="cursor-pointer"
@@ -32,7 +32,7 @@ const ChatBot = ({ setState }) => {
           <h3>Memobot</h3>
           <div></div>
         </div>
-        <div className="h-[80%] bg-white bg-opacity-60 overflow-scroll p-2 flex flex-col gap-3">
+        <div className="h-[80%] bg-white bg-opacity-60 overflow-x-hidden overflow-y-scroll p-2 flex flex-col gap-3">
           {/* chat content */}
           {/* bot chat */}
           <Bot message="<p>Haloo ada yang bisa saya bantu dengan fitur chat bot kami?</p>" />
@@ -46,7 +46,7 @@ const ChatBot = ({ setState }) => {
           <User message="Info purel" />
           <Bot message="<p>Purel ditemukan</p>" />
         </div>
-        <div className="bg-green-500 rounded-br-[10px] rounded-bl-[10px] p-3 flex items-center justify-between gap-3">
+        <div className="bg-green-500 p-3 flex items-center justify-between gap-3">
           <input
             type="text"
             className="bg-white border rounded-[10px] w-full py-2 px-4"
