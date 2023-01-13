@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdLocationPin } from "react-icons/md";
 import { SiChatbot } from "react-icons/si";
-import { useMap } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 function SearchLocation() {
   return (
@@ -22,9 +21,6 @@ function SearchLocation() {
 }
 
 const Navbar = ({ state, setState, setStateProfile }) => {
-  const map = useMap();
-  console.log(map);
-  const [toggle, setToggle] = useState(false);
   const getUser = localStorage.getItem("user");
   const navigate = useNavigate();
   function handleChat(e) {
@@ -34,38 +30,32 @@ const Navbar = ({ state, setState, setStateProfile }) => {
 
   return (
     <>
-      <div
-        className={`z-[402] fixed top-0 w-full transition ${
-          !toggle ? "" : "bg-white shadow-md"
-        }  py-2 px-5 flex justify-end`}
-        onMouseEnter={() => setToggle(true)}
-        onMouseLeave={() => setToggle(false)}
-      >
+      <div className="z-[402] fixed top-0 w-full transition py-2 px-5 flex justify-end">
         {getUser ? (
-          <p
-            className="underline cursor-pointer"
+          <div
+            className="w-[40px] h-[40px] rounded-full bg-blue-600"
             onClick={() => setStateProfile(true)}
           >
             Menu
-          </p>
+          </div>
         ) : (
-          <p
-            className="underline cursor-pointer"
+          <button
+            className="bg-blue-600 text-white font-semibold px-4 py-2"
             onClick={() => navigate("login")}
           >
             Masuk
-          </p>
+          </button>
         )}
       </div>
       <nav
         id="navbar"
-        className="max-w-sm md:max-w-lg px-5 fixed left-0 right-0 mx-auto top-12 z-[400]"
+        className="max-w-sm md:max-w-lg px-5 fixed left-0 right-0 mx-auto top-24 md:top-12 z-[400]"
       >
         <div
           className={`flex ${state ? "md:flex justify-center" : "md:block"}`}
         >
           <div className="bg-white py-2 px-4 rounded-[10px]">
-            <form className="flex gap-2">
+            <form className="flex flex-wrap md:flex-nowrap gap-2 justify-center">
               {state ? "" : <SearchLocation />}
               <button className="bg-white p-[12px] rounded-[10px] border">
                 <MdLocationPin fill="#888888" />

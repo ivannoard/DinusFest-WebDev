@@ -27,7 +27,7 @@ const Menu = ({ setStateProfile }) => {
   }, [menuState]);
   return (
     <>
-      <div className="w-[400px] h-full fixed top-0 right-0 bg-white  z-[402]">
+      <div className="w-full md:w-[400px] h-full fixed top-0 right-0 bg-white  z-[9998]">
         <div className="profile-header p-3 flex justify-between items-center py-4 shadow-md">
           <div className="flex items-center gap-3">
             <HiOutlineMenuAlt2
