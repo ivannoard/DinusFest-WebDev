@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdLocationPin } from "react-icons/md";
 import { SiChatbot } from "react-icons/si";
-import { useNavigate } from "react-router-dom";
 import { useMap } from "react-leaflet";
-import L from "leaflet";
+import { useNavigate } from "react-router-dom";
 function SearchLocation() {
   return (
     <>
