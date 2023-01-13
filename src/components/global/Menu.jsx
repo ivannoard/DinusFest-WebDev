@@ -27,17 +27,20 @@ const Menu = ({ setStateProfile }) => {
   }, [menuState]);
   return (
     <>
-      <div className="w-[400px] h-full fixed top-0 right-0 bg-white  z-[11]">
-        <div className="profile-header p-3 flex justify-between items-center pb-2 shadow-md">
+      <div className="w-[400px] h-full fixed top-0 right-0 bg-white  z-[402]">
+        <div className="profile-header p-3 flex justify-between items-center py-4 shadow-md">
           <div className="flex items-center gap-3">
             <HiOutlineMenuAlt2
               className="cursor-pointer"
               onClick={() => setToggleMenu(!toggleMenu)}
+              size={18}
             />
-            <h4 className="text-slate-900 font-semibold">MemoLife</h4>
+            <h4 className="text-slate-900 text-[14px] font-semibold">
+              MemoLife
+            </h4>
           </div>
           <MdClose
-            size={23}
+            size={18}
             onClick={() => setStateProfile(false)}
             className="cursor-pointer"
           />

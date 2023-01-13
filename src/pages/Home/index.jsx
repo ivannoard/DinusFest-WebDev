@@ -14,18 +14,18 @@ const Home = () => {
   return (
     <>
       <main className=" min-h-screen w-full">
-        <Navbar
-          state={stateChat}
-          setState={setStateChat}
-          setStateProfile={setStateProfile}
-        />
-        {stateChat && <ChatBot setState={setStateChat} />}
-        {stateProfile && <Menu setStateProfile={setStateProfile} />}
         <MapContainer
           center={[-6.966667, 110.416664]}
           zoom={13}
           scrollWheelZoom={false}
         >
+          <Navbar
+            state={stateChat}
+            setState={setStateChat}
+            setStateProfile={setStateProfile}
+          />
+          {stateChat && <ChatBot setState={setStateChat} />}
+          {stateProfile && <Menu setStateProfile={setStateProfile} />}
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

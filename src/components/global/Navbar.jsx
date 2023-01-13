@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { MdLocationPin } from "react-icons/md";
 import { SiChatbot } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
+import { useMap } from "react-leaflet";
+import L from "leaflet";
 function SearchLocation() {
   return (
     <>
@@ -21,6 +23,8 @@ function SearchLocation() {
 }
 
 const Navbar = ({ state, setState, setStateProfile }) => {
+  const map = useMap();
+  console.log(map);
   const [toggle, setToggle] = useState(false);
   const getUser = localStorage.getItem("user");
   const navigate = useNavigate();
@@ -28,10 +32,11 @@ const Navbar = ({ state, setState, setStateProfile }) => {
     e.preventDefault();
     setState(!state);
   }
+
   return (
     <>
       <div
-        className={`fixed top-0 w-full transition ${
+        className={`z-[402] fixed top-0 w-full transition ${
           !toggle ? "" : "bg-white shadow-md"
         }  py-2 px-5 flex justify-end`}
         onMouseEnter={() => setToggle(true)}
@@ -53,7 +58,10 @@ const Navbar = ({ state, setState, setStateProfile }) => {
           </p>
         )}
       </div>
-      <nav className="max-w-sm md:max-w-lg px-5 fixed left-0 right-0 mx-auto top-12 z-10">
+      <nav
+        id="navbar"
+        className="max-w-sm md:max-w-lg px-5 fixed left-0 right-0 mx-auto top-12 z-[400]"
+      >
         <div
           className={`flex ${state ? "md:flex justify-center" : "md:block"}`}
         >
