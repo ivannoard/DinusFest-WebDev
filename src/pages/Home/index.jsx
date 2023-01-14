@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { ChatBot, Menu, Navbar } from "../../components/global";
 // query
-import { useQuery } from "@apollo/client";
-import { GET_ALL_USER } from "../../graphql/user";
+// import { useQuery } from "@apollo/client";
+// import { GET_ALL_USER } from "../../graphql/user";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 const Home = () => {
   const [stateChat, setStateChat] = useState(false);
   const [stateProfile, setStateProfile] = useState(false);
   // uji coba query // success
-  const { data } = useQuery(GET_ALL_USER);
-  console.log(data);
+  // const { data } = useQuery(GET_ALL_USER);
+  // console.log(data);
 
   return (
     <>
