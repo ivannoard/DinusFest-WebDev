@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { FiChevronLeft } from "react-icons/fi";
 import { MdSend } from "react-icons/md";
 // import { SUBS_CHAT_BY_ID, CHAT_BY_USER } from '../../graphql/user';

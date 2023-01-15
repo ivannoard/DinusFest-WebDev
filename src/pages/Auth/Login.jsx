@@ -16,7 +16,7 @@ const Login = () => {
     });
   }
 
-  const [getDataById, { loading }] = useLazyQuery(GET_USER_BY_EMAIL, {
+  const [getDataById] = useLazyQuery(GET_USER_BY_EMAIL, {
     onCompleted: (data) => {
       if (data.memolive_user.length === 0) {
         console.log('data tidak ada')
