@@ -1,50 +1,96 @@
 import React, { useState } from "react";
 import { ChatBot, Menu, Navbar } from "../../components/global";
-// query
-// import { useQuery } from "@apollo/client";
-// import { GET_ALL_USER } from "../../graphql/user";
+// import axios from "axios";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { dummyLocation } from "../../utils/dummy_location";
-const Home = () => {
-  const [stateChat, setStateChat] = useState(false);
-  const [stateProfile, setStateProfile] = useState(false);
-  // uji coba query // success
-  // const { data } = useQuery(GET_ALL_USER);
-  // console.log(data);
+// import { dummyLocation } from "../../utils/dummy_location";
 
+// query
+import { useSubscription } from "@apollo/client";
+import { SUBS_ALL_LOCATION } from '../../graphql/location'
+
+const Home = () => {
+  const [idLocation, setIdLocation] = useState();
+  const [stateChat, setStateChat] = useState(false);
+  const [menuState, setMenuState] = useState("a");
+  const [koordinat, setKoordinat] = useState([
+    -6.966667, 110.416664
+  ])
+  const [stateProfile, setStateProfile] = useState(false);
+  const { data, loading: isLoading } = useSubscription(SUBS_ALL_LOCATION);
+  const handleClickLocation = (location_id) => {
+    setStateProfile(true)
+    setIdLocation(location_id)
+    setMenuState('a')
+  }
+  // useEffect(() => {
+  //   async function fetch() {
+  //     await axios.post('https://1884-2404-8000-1038-23a7-5405-7209-8663-c572.ap.ngrok.io/webhooks/rest/webhook/',
+  //       {
+  //         sender: 3,
+  //         message: "hi"
+  //       },
+  //       {
+  //         headers: {
+  //           "content-type": "application/json",
+  //         }
+  //       })
+  //       .then((response) => console.log(response))
+  //       .catch((error) => console.log(error))
+  //   }
+  //   fetch()
+  // }, [])
   return (
     <>
       <main className=" min-h-screen w-full">
         <MapContainer
-          center={[-6.966667, 110.416664]}
-          zoom={13}
+          center={[koordinat[0], koordinat[1]]}
+          zoom={14}
           scrollWheelZoom={false}
         >
           <Navbar
             state={stateChat}
             setState={setStateChat}
             setStateProfile={setStateProfile}
+            setIdLocation={setIdLocation}
+            setMenuState={setMenuState}
           />
           {stateChat && <ChatBot setState={setStateChat} />}
-          {stateProfile && <Menu setStateProfile={setStateProfile} />}
+          {stateProfile &&
+            <Menu
+              setKoordinat={setKoordinat}
+              menuState={menuState}
+              setMenuState={setMenuState}
+              setStateProfile={setStateProfile}
+              locationId={idLocation}
+            />}
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {dummyLocation.wisata.map((item) => (
-            <Marker
-              key={item.id}
-              position={[item.position[0], item.position[1]]}
-            >
-              <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
-            </Marker>
-          ))}
+          {
+            isLoading ? "" :
+              data.memolive_location.map((item, index) => (
+                <Marker
+                  key={index}
+                  position={[item.latitude, item.longitude]}
+                >
+                  <Popup>
+                    <div className="flex flex-col">
+                      <div className="flex">
+                        <div className="align-self h-[30px] w-[30px] bg-slate-500 rounded mt-2 mr-3"></div>
+                        <div>
+                          <p className="font-semibold text-lg">{item.nama_lokasi}</p>
+                          <p>Semarang</p>
+                          <p onClick={() => handleClickLocation(item.location_id)} className="underline cursor-pointer">{item.post_by_location.length} orang telah mengunjungi</p>
+                        </div>
+                      </div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
         </MapContainer>
       </main>
     </>
   );
 };
-
 export default Home;

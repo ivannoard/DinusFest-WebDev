@@ -10,7 +10,7 @@ function SearchLocation() {
         <input
           type="text"
           placeholder="Cari lokasi . . . "
-          className="border py-2 px-3 rounded-[10px] w-full outline-none focus:border-orange-500"
+          className="border py-2 px-3 rounded-[10px] w-full outline-none focus:border-sky-500"
         />
         <button className="absolute z-10 right-3 border-l border-slate-500 pl-2">
           <BiSearchAlt fill="#888888" />
@@ -20,12 +20,17 @@ function SearchLocation() {
   );
 }
 
-const Navbar = ({ state, setState, setStateProfile }) => {
+const Navbar = ({ state, setState, setStateProfile, setIdLocation, setMenuState }) => {
   const getUser = localStorage.getItem("user");
   const navigate = useNavigate();
   function handleChat(e) {
     e.preventDefault();
     setState(!state);
+  }
+  const handleAccount = () => {
+    setIdLocation('')
+    setStateProfile(true)
+    setMenuState('Profile')
   }
 
   return (
@@ -34,9 +39,9 @@ const Navbar = ({ state, setState, setStateProfile }) => {
         {getUser ? (
           <div
             className="w-[40px] h-[40px] rounded-full bg-blue-600"
-            onClick={() => setStateProfile(true)}
+            onClick={() => handleAccount()}
           >
-            Menu
+
           </div>
         ) : (
           <button

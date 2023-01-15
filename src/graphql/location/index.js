@@ -22,15 +22,63 @@ export const GET_ALL_LOCATION = gql`
 query MyQuery {
   memolive_location {
     nama_lokasi
-    location_id
-    deskripsi_lokasi
     longitude
+    location_id
     latitude
-    own_badge {
+    deskripsi_lokasi
+    badge_id
+    post_by_location {
       user_id
-      collected_by {
+      location_id
+      like
+      foto
+      feed_id
+      caption
+    }
+  }
+}
+`
+export const GET_ALL_POST_BY_LOCATION = gql`
+query MyQuery($location_id: Int) {
+  memolive_location(where: {location_id: {_eq: $location_id}}) {
+    nama_lokasi
+    longitude
+    location_id
+    latitude
+    deskripsi_lokasi
+    post_by_location {
+      foto
+      feed_id
+      caption
+      location_id
+      like
+      user_id
+      diposting {
         nama
+        user_id
+        username
       }
+    }
+  }
+}
+`
+
+export const SUBS_ALL_LOCATION = gql`
+subscription MySubscription {
+  memolive_location {
+    badge_id
+    deskripsi_lokasi
+    latitude
+    location_id
+    longitude
+    nama_lokasi
+    post_by_location {
+      caption
+      feed_id
+      foto
+      like
+      location_id
+      user_id
     }
   }
 }

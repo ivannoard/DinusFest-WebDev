@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../components/template";
 
+// query
+import { useLazyQuery } from "@apollo/client";
+import { GET_USER_BY_EMAIL } from '../../graphql/user'
+
 const Login = () => {
   const [fields, setFields] = useState();
   const navigate = useNavigate();
@@ -11,16 +15,41 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   }
+
+  const [getDataById, { loading }] = useLazyQuery(GET_USER_BY_EMAIL, {
+    onCompleted: (data) => {
+      if (data.memolive_user.length === 0) {
+        console.log('data tidak ada')
+      } else {
+        const loginData = {
+          user_id: data?.memolive_user[0]?.user_id,
+          nama: data?.memolive_user[0]?.nama,
+          username: data?.memolive_user[0]?.username
+        }
+        // console.log(data?.memolive_user[0]?.user_id)
+        localStorage.setItem("user", JSON.stringify(loginData));
+        navigate("/");
+      }
+    },
+    onError: (error) => {
+      console.log('Terjadi error di getDataByID lazyQuery', { error });
+    }
+  });
+
   async function handleLogin(e) {
     e.preventDefault();
+    getDataById({
+      variables: {
+        email: fields.email,
+        password: fields.password
+      }
+    });
     // await axios
     //   .post("url", fields, { headers: { "Content-Type": "application/json" } })
     //   .then((response) => {
     //     localStorage.setItem("user", JSON.stringify(fields));
     //     navigate("/");
     //   });
-    localStorage.setItem("user", JSON.stringify(fields));
-    navigate("/");
   }
   return (
     <>

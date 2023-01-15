@@ -11,11 +11,33 @@ query MyQuery {
   }
 }
 `
+export const SUBS_CHAT_BY_ID = gql`
+subscription MySubscription($id: Int) {
+  memolive_chat(where: {user_id: {_eq: $id}}) {
+    user_id
+    massage
+    chat_id
+  }
+}
+`
+
+export const CHAT_BY_USER = gql`
+mutation MyMutation($user_id: Int, $massage: String) {
+  insert_memolive_chat(objects: {massage: $massage, user_id: $user_id}) {
+    returning {
+      massage
+      user_id
+    }
+  }
+}
+`
+
 // untuk login, filter by email & password
 export const GET_USER_BY_EMAIL = gql`
 query MyQuery($email: String, $password: String) {
   memolive_user(where: {email: {_eq: $email}, password: {_eq: $password}}) {
     user_id
+    username
     telephone
     nama
     email
