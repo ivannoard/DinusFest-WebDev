@@ -20,7 +20,7 @@ function SearchLocation() {
   );
 }
 
-const Navbar = ({ state, setState, setStateProfile, setIdLocation, setMenuState }) => {
+const Navbar = ({ state, setState, setStateProfile, setIdLocation, setMenuState, dataUser }) => {
   const getUser = localStorage.getItem("user");
   const navigate = useNavigate();
   function handleChat(e) {
@@ -38,10 +38,10 @@ const Navbar = ({ state, setState, setStateProfile, setIdLocation, setMenuState 
       <div className="z-[402] fixed top-0 w-full transition py-2 px-5 flex justify-end">
         {getUser ? (
           <div
-            className="w-[40px] h-[40px] rounded-full bg-blue-600"
+
             onClick={() => handleAccount()}
           >
-
+            <img className="w-[40px] h-[40px] rounded-full object-cover" src={dataUser?.memolive_user[0].foto} alt={dataUser?.memolive_user[0].nama} />
           </div>
         ) : (
           <button
