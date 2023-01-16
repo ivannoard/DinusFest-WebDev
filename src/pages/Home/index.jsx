@@ -8,6 +8,8 @@ import { MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import { useSubscription } from "@apollo/client";
 import { SUBS_ALL_LOCATION } from "../../graphql/location";
 import { GET_USER_BY_ID } from "../../graphql/user";
+import { SponsorLogo } from "../../assets/images";
+import { dummyLocation } from "../../utils/dummy_location";
 
 const Home = () => {
   const [idLocation, setIdLocation] = useState();
@@ -17,6 +19,7 @@ const Home = () => {
   const [koordinat, setKoordinat] = useState([-6.966667, 110.416664]);
   const [stateProfile, setStateProfile] = useState(false);
   const [getPosition, setGetPosition] = useState();
+  const [getSearchData,setGetSearchData]=useState()
   const { data, loading: isLoading } = useSubscription(SUBS_ALL_LOCATION);
   const { data: dataUser } = useSubscription(GET_USER_BY_ID, {
     variables: {
@@ -34,7 +37,8 @@ const Home = () => {
       setUser(user);
     }
   }, []);
-  console.log(getPosition);
+  const getFromDummy = dummyLocation.wisata.filter(item=>item.name.toLowerCase()===getSearchData?.location)
+  // console.log(getFromDummy[0].position[0])
 
   return (
     <>
@@ -44,6 +48,7 @@ const Home = () => {
           zoom={14}
           scrollWheelZoom={false}
         >
+          <img src={SponsorLogo} alt="" className="z-[405] absolute bottom-0 left-0 w-[300px]"/>
           <Navbar
             state={stateChat}
             dataUser={dataUser}
@@ -52,6 +57,7 @@ const Home = () => {
             setIdLocation={setIdLocation}
             setMenuState={setMenuState}
             setGetPosition={setGetPosition}
+            setGetSearchData={setGetSearchData}
           />
           {stateChat && <ChatBot setState={setStateChat} />}
           {stateProfile && (
@@ -86,7 +92,20 @@ const Home = () => {
                   </Tooltip>
                 </Marker>
               )}
-              {data.memolive_location.map((item, index) => (
+              {
+                getFromDummy ? (
+                  <Marker key={"user_search_location"}
+                  position={getFromDummy[0]?.position?[getFromDummy[0]?.position[0], getFromDummy[0]?.position[1]]:[0,0]}>
+                    <Tooltip direction="right"
+                    offset={[0, 20]}
+                    opacity={1}
+                    permanent >
+                      {getFromDummy[0]?.name} telah ditemukan!
+                    </Tooltip>
+                  </Marker>
+                ) : ''
+              }
+              {data?.memolive_location.map((item, index) => (
                 <Marker key={index} position={[item.latitude, item.longitude]}>
                   <Popup>
                     <div className="flex flex-col">
@@ -109,6 +128,7 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
+                    
                   </Popup>
                 </Marker>
               ))}

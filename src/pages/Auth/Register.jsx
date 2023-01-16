@@ -116,7 +116,7 @@ const Register = () => {
           <p className="text-sm text-center mt-3">
             Sudah punya akun?{" "}
             <span
-              className="text-orange-500 font-semibold cursor-pointer"
+              className="text-sky-600 font-semibold cursor-pointer"
               onClick={() => navigate("/login")}
             >
               Masuk Sekarang

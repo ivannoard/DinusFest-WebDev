@@ -113,7 +113,7 @@ const Login = () => {
           <p className="text-sm text-center mt-3">
             Belum punya akun?{" "}
             <span
-              className="text-sm text-orange-500 font-semibold cursor-pointer"
+              className="text-sm text-sky-600 font-semibold cursor-pointer"
               onClick={() => navigate("/register")}
             >
               Daftar Sekarang

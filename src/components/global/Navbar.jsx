@@ -4,6 +4,7 @@ import { MdLocationPin } from "react-icons/md";
 import { SiChatbot } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { APKLogo } from "../../assets/images";
 function SearchLocation({ handleChangeGetLocation, handleSearchLocation }) {
   return (
     <>
@@ -35,6 +36,7 @@ const Navbar = ({
   setMenuState,
   dataUser,
   setGetPosition,
+  setGetSearchData
 }) => {
   const [fields, setFields] = useState();
   const [alert, setAlert] = useState(false);
@@ -59,7 +61,10 @@ const Navbar = ({
       setAlert(true);
       setAlertMessage("Nama lokasi pencarian tidak boleh kosong");
       return;
+    }else{
+      setGetSearchData(fields)
     }
+
   }
 
   // get location user
@@ -119,6 +124,7 @@ const Navbar = ({
             state ? "md:flex justify-center" : "md:block"
           }`}
         >
+          <img src={APKLogo} alt=""  className="w-[150px]"/>
           <div className="bg-white py-2 px-4 rounded-[10px]">
             <form className="flex flex-wrap md:flex-nowrap gap-2 justify-center">
               {state ? (
