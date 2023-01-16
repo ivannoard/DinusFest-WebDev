@@ -6,35 +6,35 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 // query
 import { useSubscription } from "@apollo/client";
-import { SUBS_ALL_LOCATION } from '../../graphql/location'
-import { GET_USER_BY_ID } from '../../graphql/user'
+import { SUBS_ALL_LOCATION } from "../../graphql/location";
+import { GET_USER_BY_ID } from "../../graphql/user";
 
 const Home = () => {
   const [idLocation, setIdLocation] = useState();
   const [stateChat, setStateChat] = useState(false);
   const [menuState, setMenuState] = useState("a");
   const [user, setUser] = useState();
-  const [koordinat, setKoordinat] = useState([
-    -6.966667, 110.416664
-  ])
+  const [koordinat, setKoordinat] = useState([-6.966667, 110.416664]);
   const [stateProfile, setStateProfile] = useState(false);
+  const [getPosition, setGetPosition] = useState();
   const { data, loading: isLoading } = useSubscription(SUBS_ALL_LOCATION);
   const { data: dataUser } = useSubscription(GET_USER_BY_ID, {
     variables: {
-      user_id: user?.user_id
-    }
+      user_id: user?.user_id,
+    },
   });
   const handleClickLocation = (location_id) => {
-    setStateProfile(true)
-    setIdLocation(location_id)
-    setMenuState('a')
-  }
+    setStateProfile(true);
+    setIdLocation(location_id);
+    setMenuState("a");
+  };
   useEffect(() => {
-    if (localStorage.getItem('user')) {
-      const user = JSON.parse(localStorage.getItem('user'))
-      setUser(user)
+    if (localStorage.getItem("user")) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      setUser(user);
     }
-  }, [])
+  }, []);
+  console.log(getPosition);
   return (
     <>
       <main className=" min-h-screen w-full">
@@ -50,35 +50,44 @@ const Home = () => {
             setStateProfile={setStateProfile}
             setIdLocation={setIdLocation}
             setMenuState={setMenuState}
+            setGetPosition={setGetPosition}
           />
           {stateChat && <ChatBot setState={setStateChat} />}
-          {stateProfile &&
+          {stateProfile && (
             <Menu
               setKoordinat={setKoordinat}
               menuState={menuState}
               setMenuState={setMenuState}
               setStateProfile={setStateProfile}
               locationId={idLocation}
-            />}
+            />
+          )}
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {
-            isLoading ? "" :
-              data.memolive_location.map((item, index) => (
-                <Marker
-                  key={index}
-                  position={[item.latitude, item.longitude]}
-                >
+          {isLoading
+            ? ""
+            : data.memolive_location.map((item, index) => (
+                <Marker key={index} position={[item.latitude, item.longitude]}>
                   <Popup>
                     <div className="flex flex-col">
                       <div className="flex">
                         {/* <div className="align-self h-[30px] w-[30px] bg-slate-500 rounded mt-2 mr-3"></div> */}
                         <div>
-                          <p className="font-semibold text-lg">{item.nama_lokasi}</p>
+                          <p className="font-semibold text-lg">
+                            {item.nama_lokasi}
+                          </p>
                           <p>Semarang</p>
-                          <p onClick={() => handleClickLocation(item.location_id)} className="underline cursor-pointer">{item.post_by_location.length} orang telah mengunjungi</p>
+                          <p
+                            onClick={() =>
+                              handleClickLocation(item.location_id)
+                            }
+                            className="underline cursor-pointer"
+                          >
+                            {item.post_by_location.length} orang telah
+                            mengunjungi
+                          </p>
                         </div>
                       </div>
                     </div>
