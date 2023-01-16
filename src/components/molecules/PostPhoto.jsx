@@ -112,7 +112,7 @@ const PostPhoto = ({ setMenuState }) => {
                 }
               </select>
             </label>
-            <button type="submit">
+            <button type="submit" className="py-3 px-4 bg-sky-600 rounded-md text-[14px] text-white font-semibold">
               Submit
             </button>
           </form>
