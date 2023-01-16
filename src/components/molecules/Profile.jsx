@@ -79,7 +79,6 @@ const Profile = ({ setMenuState }) => {
       setUserId(data.user_id)
     }
   }, [userId])
-  console.log(data)
   return (
     <>
       <div className="flex justify-center mb-6 mt-8 border-b">

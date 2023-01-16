@@ -12,6 +12,7 @@ query MyQuery{
       nama
       user_id
       username
+      foto
     }
     komentar_postingan {
       comment
@@ -24,7 +25,7 @@ query MyQuery{
 }
 `
 export const ALL_FEED_DATA_BY_LOCATION = gql`
-query MyQuery($location_id: Int = 10) {
+query MyQuery($location_id: Int) {
   memolive_feed(where: {location_id: {_eq: $location_id}}) {
     user_id
     location_id
@@ -43,6 +44,7 @@ query MyQuery($location_id: Int = 10) {
       username
       user_id
       nama
+      foto
     }
     lokasi_photo {
       nama_lokasi
@@ -101,6 +103,7 @@ subscription MySubscription($user_id: Int) {
       nama
       username
       user_id
+      foto
     }
   }
 }

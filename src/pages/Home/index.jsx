@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChatBot, Menu, Navbar } from "../../components/global";
 // import axios from "axios";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
@@ -7,38 +7,34 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 // query
 import { useSubscription } from "@apollo/client";
 import { SUBS_ALL_LOCATION } from '../../graphql/location'
+import { GET_USER_BY_ID } from '../../graphql/user'
 
 const Home = () => {
   const [idLocation, setIdLocation] = useState();
   const [stateChat, setStateChat] = useState(false);
   const [menuState, setMenuState] = useState("a");
+  const [user, setUser] = useState();
   const [koordinat, setKoordinat] = useState([
     -6.966667, 110.416664
   ])
   const [stateProfile, setStateProfile] = useState(false);
   const { data, loading: isLoading } = useSubscription(SUBS_ALL_LOCATION);
+  const { data: dataUser } = useSubscription(GET_USER_BY_ID, {
+    variables: {
+      user_id: user?.user_id
+    }
+  });
   const handleClickLocation = (location_id) => {
     setStateProfile(true)
     setIdLocation(location_id)
     setMenuState('a')
   }
-  // useEffect(() => {
-  //   async function fetch() {
-  //     await axios.post('https://1884-2404-8000-1038-23a7-5405-7209-8663-c572.ap.ngrok.io/webhooks/rest/webhook/',
-  //       {
-  //         sender: 3,
-  //         message: "hi"
-  //       },
-  //       {
-  //         headers: {
-  //           "content-type": "application/json",
-  //         }
-  //       })
-  //       .then((response) => console.log(response))
-  //       .catch((error) => console.log(error))
-  //   }
-  //   fetch()
-  // }, [])
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      const user = JSON.parse(localStorage.getItem('user'))
+      setUser(user)
+    }
+  }, [])
   return (
     <>
       <main className=" min-h-screen w-full">
@@ -49,6 +45,7 @@ const Home = () => {
         >
           <Navbar
             state={stateChat}
+            dataUser={dataUser}
             setState={setStateChat}
             setStateProfile={setStateProfile}
             setIdLocation={setIdLocation}
@@ -77,7 +74,7 @@ const Home = () => {
                   <Popup>
                     <div className="flex flex-col">
                       <div className="flex">
-                        <div className="align-self h-[30px] w-[30px] bg-slate-500 rounded mt-2 mr-3"></div>
+                        {/* <div className="align-self h-[30px] w-[30px] bg-slate-500 rounded mt-2 mr-3"></div> */}
                         <div>
                           <p className="font-semibold text-lg">{item.nama_lokasi}</p>
                           <p>Semarang</p>
