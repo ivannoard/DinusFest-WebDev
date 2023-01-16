@@ -1,16 +1,42 @@
 import { gql } from '@apollo/client';
 // get all data user
-export const GET_ALL_USER = gql`
-query MyQuery {
-  memolive_user {
+export const GET_USER_BY_ID = gql`
+subscription MySubscription($user_id: Int) {
+  memolive_user(where: {user_id: {_eq: $user_id}}) {
+    username
     user_id
     telephone
-    nama
-    email
     password
+    nama
+    foto
+    email
   }
 }
 `
+
+export const UPDATE_USER_BY_EMAIL = gql`
+mutation MyMutation(
+  $user_id: Int,
+  $email: String,
+  $foto: String,
+  $nama: String,
+  $telephone: String,
+  $username: String) {
+  update_memolive_user(
+    where: 
+    {
+      user_id: {_eq: $user_id}, 
+      email: {_eq: $email}
+    }, 
+    _set: {foto: $foto, nama: $nama, telephone: $telephone, username: $username}) {
+    returning {
+      username
+      nama
+    }
+  }
+}
+`
+
 export const SUBS_CHAT_BY_ID = gql`
 subscription MySubscription($id: Int) {
   memolive_chat(where: {user_id: {_eq: $id}}) {

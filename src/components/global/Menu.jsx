@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { MdAddPhotoAlternate } from "react-icons/md";
-import { CardMemo, Profile, PostPhoto } from "../molecules";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdAddPhotoAlternate, MdOutlineClose } from "react-icons/md";
+import { CardMemo, Profile, PostPhoto, SettingView } from "../molecules";
 import { useNavigate } from "react-router-dom";
 
 // query
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
+import { GET_USER_BY_ID } from '../../graphql/user'
 import { ALL_FEED_DATA_BY_LOCATION } from '../../graphql/feed'
 
 const Menu = ({ setStateProfile, menuState, setMenuState, locationId }) => {
@@ -15,6 +16,10 @@ const Menu = ({ setStateProfile, menuState, setMenuState, locationId }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [currentView, setCurrentView] = useState();
   const [user, setUser] = useState();
+  const { data: dataUser } = useSubscription(GET_USER_BY_ID, {
+    fetchPolicy: 'network-only',
+    variables: { user_id: user?.user_id }
+  });
   const { data, loading: isLoading } = useQuery(ALL_FEED_DATA_BY_LOCATION, {
     fetchPolicy: 'network-only',
     variables: { location_id: locationId }
@@ -38,7 +43,7 @@ const Menu = ({ setStateProfile, menuState, setMenuState, locationId }) => {
       case "PostPhoto":
         return setCurrentView(<PostPhoto setMenuState={setMenuState} />);
       case "Setting":
-        return setCurrentView(<p>Pengaturan</p>);
+        return setCurrentView(<SettingView setMenuState={setMenuState} />);
       default:
         return setCurrentView(
           <div className="memo-media h-full">
@@ -65,33 +70,40 @@ const Menu = ({ setStateProfile, menuState, setMenuState, locationId }) => {
       setUser(user)
     }
   }, [])
-  // console.log(data)
   return (
     <>
       <div className="profile w-full md:w-[400px] h-full fixed top-0 right-0 bg-white  z-[9998]">
-        {/* <div onMouseLeave={() => setStateProfile(false)} className="profile w-full md:w-[400px] h-full fixed top-0 right-0 bg-white  z-[9998]"> */}
-        {/* <div className="profile w-full md:w-[400px] h-full fixed top-0 right-0 bg-white  z-[9998]"> */}
         <div className="profile-header p-3 items-center py-4 shadow-md">
           <div className="flex items-center gap-3">
-            <button type="button" id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className="bg-slate-300 rounded-full w-[40px] h-[40px]"></button>
-            <div>
-              <h5 className="font-semibold text-sm">{user?.username}</h5>
-              <p className="text-sm text-slate-500">{user?.nama}</p>
-            </div>
-            <div className="flex ml-auto">
-              {
-                menuState === 'Profile' &&
-                <MdAddPhotoAlternate
-                  className="cursor-pointer mr-3"
-                  onClick={() => setMenuState('PostPhoto')}
-                  size={24}
-                />
-              }
-              <HiOutlineMenuAlt2
-                className="cursor-pointer"
-                onClick={() => setToggleMenu(!toggleMenu)}
-                size={24}
+            <MdOutlineClose
+              className="cursor-pointer self-center"
+              size={26}
+              onClick={() => setStateProfile(false)}
+            />
+            {
+              menuState === 'Profile' &&
+              <MdAddPhotoAlternate
+                className="cursor-pointer self-center"
+                onClick={() => setMenuState('PostPhoto')}
+                size={26}
               />
+            }
+            <div
+              onClick={() => setToggleMenu(!toggleMenu)}
+              className="flex ml-auto">
+              <div>
+                <img className="rounded-full w-[40px] h-[40px] mr-3 object-cover" src={dataUser?.memolive_user[0].foto} alt="" />
+              </div>
+              <div className="flex flex-row">
+                <div>
+                  <h5 className="font-semibold text-sm">{user?.username}</h5>
+                  <p className="text-sm text-slate-500">{user?.nama}</p>
+                </div>
+                <IoIosArrowDown
+                  className="mt-1 ml-3"
+                  size={18}
+                />
+              </div>
             </div>
             <div id="dropdown" className={`${toggleMenu ? 'absolute top-[80px] right-[20px]' : 'hidden'} z-[9999] bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700`}>
               <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">

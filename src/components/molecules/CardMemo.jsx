@@ -2,7 +2,7 @@ import React from "react";
 import { MdCameraEnhance } from "react-icons/md";
 
 const CardMemo = ({ data, setMenuState }) => {
-  // console.log(data)
+  console.log(data)
   return (
     <>
       {
@@ -10,7 +10,9 @@ const CardMemo = ({ data, setMenuState }) => {
           data?.map((item, index) => (
             <div key={index} className="card-memo my-2 py-1 px-6">
               <div className="card-memo-header flex items-center gap-3 mb-3">
-                <div className="bg-slate-300 rounded-full w-[40px] h-[40px]"></div>
+                <div>
+                  <img className="rounded-full w-[40px] h-[40px] object-cover" src={item.diposting.foto} alt={item.diposting.username} />
+                </div>
                 <div>
                   <h5 className="font-semibold text-sm">{item?.diposting.nama}</h5>
                   <p className="text-sm text-slate-500">{item?.lokasi_photo.nama_lokasi}, Semarang</p>

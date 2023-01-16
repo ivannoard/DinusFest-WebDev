@@ -1,14 +1,20 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { FiChevronLeft } from "react-icons/fi";
 import { MdSend } from "react-icons/md";
 // import { SUBS_CHAT_BY_ID, CHAT_BY_USER } from '../../graphql/user';
 // import { useSubscription, useMutation } from "@apollo/client";
 
-function Bot(props) {
+function Bot({ message }) {
   return (
     <>
-      <div className="chat-bot bg-sky-600 text-white w-3/4 px-3 py-2 rounded-tr-[10px] rounded-tl-[10px] rounded-br-[10px]">
-        <div dangerouslySetInnerHTML={{ __html: props.message }}></div>
+      <div
+        key={message}
+        className="chat-bot bg-sky-600 text-white w-3/4 px-3 py-2 rounded-tr-[10px] rounded-tl-[10px] rounded-br-[10px]"
+      >
+        {message?.map((item) => (
+          <p>{item}</p>
+        ))}
       </div>
     </>
   );
@@ -23,27 +29,9 @@ function User(props) {
   );
 }
 const ChatBot = ({ setState }) => {
-  const data = [
-    {
-      bot: false,
-      message: "haloo"
-    },
-    {
-      bot: true,
-      message: "hii apa kabar"
-    },
-    {
-      bot: false,
-      message: "aku baik"
-    },
-    {
-      bot: true,
-      message: "aku juga"
-    },
-  ]
-  const [dataChat, setDataChat] = useState(data);
+  const [dataChat, setDataChat] = useState([]);
   const [fields, setFields] = useState({
-    user_chat: ''
+    user_chat: "",
   });
   // const { data, loading, error } = useSubscription(SUBS_CHAT_BY_ID, { variables: { id: id.user_id } });
   // const [chatUser, { loading: loadingDelete }] = useMutation(CHAT_BY_USER, {
@@ -71,16 +59,39 @@ const ChatBot = ({ setState }) => {
   //     }
   //   })
   // }
-  const chatUser = () => {
-    const chat = {
-      bot: false,
-      message: fields.user_chat
-    }
-    setDataChat([...dataChat, chat])
-    setFields({
-      user_chat: ''
-    })
-  }
+  const chatUser = async () => {
+    await axios
+      .post(
+        "http://localhost:5005/webhooks/rest/webhook",
+        {
+          sender: "1",
+          message: fields.user_chat,
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        const chat = {
+          bot: false,
+          message: [fields.user_chat],
+        };
+        const botResponse = {
+          bot: true,
+          message: [],
+        };
+        const responseText = response.data.map((item) => item.text);
+        botResponse.message = responseText;
+        console.log(botResponse);
+        setDataChat([...dataChat, chat, botResponse]);
+        setFields({
+          user_chat: "",
+        });
+      })
+      .catch((e) => console.log(e));
+  };
   return (
     <>
       <div className="fixed h-screen right-0 w-full md:w-[400px] z-[9999]">
@@ -95,15 +106,13 @@ const ChatBot = ({ setState }) => {
             <div></div>
           </div>
           <div className="overflow-x-hidden bg-white bg-opacity-60 h-full overflow-y-scroll p-2 flex flex-col gap-3">
-            {
-              dataChat.map((item, index) => {
-                if (item.bot) {
-                  return <Bot message={item.message} key={index} />
-                } else {
-                  return <User message={item.message} key={index} />
-                }
-              })
-            }
+            {dataChat?.map((item, index) => {
+              if (item.bot) {
+                return <Bot message={item.message} key={index} />;
+              } else {
+                return <User message={item.message[0]} key={index} />;
+              }
+            })}
           </div>
 
           <div className="bg-white border-2-t  mt-auto md:mb-5 p-3 flex items-center justify-between gap-3">
@@ -116,7 +125,10 @@ const ChatBot = ({ setState }) => {
               placeholder="Apa yang ingin anda tanyakan?"
               onChange={handleChange}
             />
-            <button onClick={() => chatUser()} className="bg-sky-600 rounded-full p-3">
+            <button
+              onClick={() => chatUser()}
+              className="bg-sky-600 rounded-full p-3"
+            >
               <MdSend fill="#FFFFFF" size={17} />
             </button>
           </div>
