@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChatBot, Menu, Navbar } from "../../components/global";
 // import axios from "axios";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 // import { dummyLocation } from "../../utils/dummy_location";
 
 // query
@@ -35,6 +35,7 @@ const Home = () => {
     }
   }, []);
   console.log(getPosition);
+
   return (
     <>
       <main className=" min-h-screen w-full">
@@ -66,9 +67,26 @@ const Home = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {isLoading
-            ? ""
-            : data.memolive_location.map((item, index) => (
+          {isLoading ? (
+            ""
+          ) : (
+            <div>
+              {getPosition && (
+                <Marker
+                  key={"user_location"}
+                  position={[getPosition[0], getPosition[1]]}
+                >
+                  <Tooltip
+                    direction="right"
+                    offset={[0, 20]}
+                    opacity={1}
+                    permanent
+                  >
+                    Anda berada di sini
+                  </Tooltip>
+                </Marker>
+              )}
+              {data.memolive_location.map((item, index) => (
                 <Marker key={index} position={[item.latitude, item.longitude]}>
                   <Popup>
                     <div className="flex flex-col">
@@ -94,6 +112,8 @@ const Home = () => {
                   </Popup>
                 </Marker>
               ))}
+            </div>
+          )}
         </MapContainer>
       </main>
     </>
