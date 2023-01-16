@@ -86,9 +86,6 @@ const Profile = ({ setMenuState }) => {
         <p onClick={() => handleProfile('Postingan')} className={`${profileState === 'Postingan' ? 'border-black' : ''} cursor-pointer px-8 pb-3 border-b  uppercase font-semibold`}>
           Postingan
         </p>
-        <p onClick={() => handleProfile('Badge')} className={`${profileState === 'Badge' ? 'border-black' : ''} cursor-pointer px-8 pb-3 border-b  uppercase font-semibold`}>
-          Badge
-        </p>
       </div>
       {currentView}
     </>
