@@ -61,7 +61,7 @@ const Navbar = ({
       setAlert(true);
       setAlertMessage("Nama lokasi pencarian tidak boleh kosong");
       return;
-    }else{
+    } else {
       setGetSearchData(fields)
     }
 
@@ -120,11 +120,10 @@ const Navbar = ({
         className="max-w-sm md:max-w-lg px-5 fixed left-0 right-0 mx-auto top-24 md:top-12 z-[400]"
       >
         <div
-          className={`flex relative ${
-            state ? "md:flex justify-center" : "md:block"
-          }`}
+          className={`flex flex-col md:flex-row relative ${state ? "md:flex justify-center" : "md:block"
+            }`}
         >
-          <img src={APKLogo} alt=""  className="w-[150px]"/>
+          <img src={APKLogo} alt="" className="w-[150px]" />
           <div className="bg-white py-2 px-4 rounded-[10px]">
             <form className="flex flex-wrap md:flex-nowrap gap-2 justify-center">
               {state ? (
@@ -154,7 +153,7 @@ const Navbar = ({
             </form>
           </div>
           {alert && (
-            <div className="mt-1 absolute top-28 md:top-16 left-0 right-0 bg-red-500 py-2 px-3 w-3/4 text-center mx-auto rounded-[10px] text-white font-semibold">
+            <div className="mt-1 absolute top-28 md:top-24 left-0 right-0 bg-red-500 py-2 px-3 w-3/4 text-center mx-auto rounded-[10px] text-white font-semibold">
               <AiOutlineInfoCircle className="inline mr-1" />
               {alertMessage}
             </div>

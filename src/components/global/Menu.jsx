@@ -118,7 +118,7 @@ const Menu = ({ setStateProfile, menuState, setMenuState, locationId }) => {
 
         </div>
         <div
-          className={`h-[92%] overflow-x-hidden ${toggleMenu ? "overflow-hidden" : "overflow-scroll"
+          className={`h-[92%] mb-8 overflow-x-hidden ${toggleMenu ? "overflow-hidden" : "overflow-scroll"
             } relative`}
         >
           {currentView}

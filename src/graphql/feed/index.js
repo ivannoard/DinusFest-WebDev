@@ -110,8 +110,8 @@ subscription MySubscription($user_id: Int) {
 `
 
 export const POST_FEED = gql`
-mutation MyMutation($caption: String, $foto: String, $location_id: Int, $user_id: Int) {
-  insert_memolive_feed(objects: {caption: $caption, foto: $foto, location_id: $location_id, user_id: $user_id}) {
+mutation MyMutation($caption: String, $foto: String, $location_id: Int, $user_id: Int, $tgl_posting: date) {
+  insert_memolive_feed(objects: {caption: $caption, foto: $foto, location_id: $location_id, user_id: $user_id, tgl_posting: $tgl_posting}) {
     returning {
       feed_id
       caption
