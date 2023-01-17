@@ -69,7 +69,6 @@ subscription MySubscription($user_id: Int) {
     location_id
     user_id
     lokasi_photo {
-      badge_id
       deskripsi_lokasi
       latitude
       location_id

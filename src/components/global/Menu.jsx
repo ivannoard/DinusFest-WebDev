@@ -93,7 +93,7 @@ const Menu = ({ setStateProfile, menuState, setMenuState, locationId }) => {
               className="flex ml-auto">
               <div>
                 {
-                  dataUser.memolive_user[0].foto ?
+                  dataUser?.memolive_user[0].foto ?
                     <img className="rounded-full w-[40px] h-[40px] mr-3 object-cover" src={dataUser?.memolive_user[0].foto} alt="" />
                     :
                     <div className="rounded-full w-[40px] h-[40px] mr-3 bg-slate-500" />

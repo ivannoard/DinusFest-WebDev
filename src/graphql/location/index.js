@@ -9,7 +9,6 @@ query MyQuery {
     location_id
     latitude
     deskripsi_lokasi
-    badge_id
   }
 }
 `
