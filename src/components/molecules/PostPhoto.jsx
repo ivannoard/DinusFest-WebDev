@@ -56,7 +56,7 @@ const PostPhoto = ({ setMenuState }) => {
         caption: fields.caption,
         location_id: fields.lokasi,
         user_id: id.user_id,
-        tgl_posting: fields.tanggal
+        created_at: fields.tanggal
       }
     })
     setMenuState('Profile')

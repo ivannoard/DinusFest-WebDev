@@ -26,6 +26,7 @@ query MyQuery($location_id: Int) {
     foto
     feed_id
     caption
+    created_at
     lokasi_photo {
       nama_lokasi
       location_id
@@ -51,6 +52,7 @@ query MyQuery($user_id: Int) {
     foto
     feed_id
     caption
+    created_at
     diposting {
       username
       user_id
@@ -68,6 +70,7 @@ subscription MySubscription($user_id: Int) {
     like
     location_id
     user_id
+    created_at
     lokasi_photo {
       deskripsi_lokasi
       latitude
@@ -87,7 +90,7 @@ subscription MySubscription($user_id: Int) {
 
 export const POST_FEED = gql`
 mutation MyMutation($caption: String, $foto: String, $location_id: Int, $user_id: Int, $tgl_posting: date) {
-  insert_memolive_feed(objects: {caption: $caption, foto: $foto, location_id: $location_id, user_id: $user_id, tgl_posting: $tgl_posting}) {
+  insert_memolive_feed(objects: {caption: $caption, foto: $foto, location_id: $location_id, user_id: $user_id, created_at: $created_at}) {
     returning {
       feed_id
       caption
