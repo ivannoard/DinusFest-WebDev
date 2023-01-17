@@ -14,13 +14,6 @@ query MyQuery{
       username
       foto
     }
-    komentar_postingan {
-      comment
-      comment_id
-      feed_id
-      like
-      user_id
-    }
   }
 }
 `
@@ -33,7 +26,7 @@ query MyQuery($location_id: Int) {
     foto
     feed_id
     caption
-    post_by_location {
+    lokasi_photo {
       nama_lokasi
       location_id
       latitude
@@ -45,13 +38,6 @@ query MyQuery($location_id: Int) {
       user_id
       nama
       foto
-    }
-    lokasi_photo {
-      nama_lokasi
-      longitude
-      location_id
-      latitude
-      deskripsi_lokasi
     }
   }
 }
@@ -65,15 +51,6 @@ query MyQuery($user_id: Int) {
     foto
     feed_id
     caption
-    lokasi_photo {
-      nama_lokasi
-      deskripsi_lokasi
-      own_badge {
-        user_id
-      }
-      longitude
-      latitude
-    }
     diposting {
       username
       user_id

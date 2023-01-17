@@ -99,12 +99,19 @@ const Navbar = ({
     <>
       <div className="z-[402] fixed top-0 w-full transition py-2 px-5 flex justify-end">
         {getUser ? (
-          <div onClick={() => handleAccount()}>
-            <img
-              className="w-[40px] h-[40px] rounded-full object-cover"
-              src={dataUser?.memolive_user[0].foto}
-              alt={dataUser?.memolive_user[0].nama}
-            />
+          <div className="z-[800000]" onClick={() => handleAccount()}>
+            {
+              dataUser?.memolive_user[0].foto ?
+                <img
+                  className="w-[40px] h-[40px] rounded-full object-cover"
+                  src={dataUser?.memolive_user[0].foto}
+                  alt={dataUser?.memolive_user[0].nama}
+                />
+                :
+                <div
+                  className="w-[40px] h-[40px] rounded-full bg-white"
+                />
+            }
           </div>
         ) : (
           <button
